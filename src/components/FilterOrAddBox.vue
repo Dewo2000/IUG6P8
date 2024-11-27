@@ -5,6 +5,8 @@
     - modo avanzado deja all: a ''
 -->
 <template>
+   <button type="button" data-bs-toggle="button" class="limpiar-filtro"
+   @click="unFilter()" title="Limpiar filtro">🗑️</button>
   <div class="row">
     <div class="col-auto w-75">
       <div class="input-group">
@@ -73,6 +75,10 @@ function toggleAdvanced() {
   } else {
     filter.value.fields = {}
   }
+}
+function unFilter(){
+  filter.value.all = ''
+  filter.value.fields = {}
 }
 
 </script>
