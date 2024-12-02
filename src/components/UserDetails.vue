@@ -14,7 +14,13 @@
             <tr>
                 <th>Grupos a los que da clase</th>
                 <td v-if="user.groups.length">
-                    {{ user.groups.map(g => formatNiceGroup(g)).join(' ') }}
+                    <span
+                    v-for="group in user.groups"
+                    :key="group.id"
+                    class="badge rounded-pill text-bg-secondary me-1"
+                    :title="'Asignatura: ' + gState.resolve(gState.resolve(group).subjectId).name + ' Grado: ' + gState.resolve(gState.resolve(group).subjectId).degree ">
+                        {{ formatNiceGroup(group) }}
+                    </span>
                 </td>
                 <td v-else> (ninguno) </td>
             </tr>

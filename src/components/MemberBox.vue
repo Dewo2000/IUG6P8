@@ -9,10 +9,10 @@
         </div>
         <div class="col-9 text-start">
             <div v-for="o in possible" :key="o.id" class="caja">
-                <span v-if="current.some(c => c.id == o.id)" class="exists" @click="rm(o.id)">
+                <span v-if="current.some(c => c.id == o.id)" class="badge rounded-pill text-bg-primary me-1" @click="rm(o.id)">
                     {{ o.name }}
                 </span>
-                <span v-else @click="current.push(o)">
+                <span v-else class="badge rounded-pill text-bg-secondary me-1" @click="current.push(o)">
                     {{ o.name }}
                 </span>
             </div>
