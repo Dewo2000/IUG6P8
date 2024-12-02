@@ -34,9 +34,9 @@
         </ul>
         <div class="nav-item ms-auto">
           <div class="btn-group">
-            <button id="save" class="btn btn-outline-secondary">💾</button>
-            <button id="clean" class="btn btn-outline-secondary">🧽</button>
-            <button id="restore" class="btn btn-outline-secondary">↩️</button>
+            <button id="save" class="btn btn-outline-secondary" title="Guardar">💾</button>
+            <button id="clean" class="btn btn-outline-secondary" title="Limpiar">🧽</button>
+            <button id="restore" class="btn btn-outline-secondary" title="Restaurar">↩️</button>
           </div>
         </div>
       </div>
@@ -350,7 +350,7 @@ function rmSubject(id) {
     selected.value = { id: -1 };
   }  
   gState.model.rmSubject(id)
-  gState.key++
+  gState.key++ 
 }
 
 
