@@ -27,12 +27,15 @@
         <button type="button" @click="rm(slot)">🗑️</button>
       </div>
       <button type="button" @click="add">➕</button>
+      <button type="button especial" @click.prevent="addSlot(0)">➕ Lab</button>
+      <button type="button especial" @click.prevent="addSlot(1)">➕ Teoria</button>
       <input type="hidden" :name="id" :id="id" :value="read">
     </div>
   </div>
 </template>
 
 <script setup>
+import { WeekDay } from '@/model.js';
 import { gState, weekDayNames } from '../state.js'
 
 import { ref, computed, onMounted } from 'vue'
@@ -41,6 +44,7 @@ const props = defineProps({
   label: String,
   id: String,
   start: Array,
+  groupId: Number,
 })
 
 const current = ref([])
@@ -67,12 +71,78 @@ function setLocation(slot) {
   slot.location = document.getElementById(`${props.id}-${slot.id}-location`).value
 }
 
+function setLastLocation(slot) {
+  slot.location = document.querySelector('[id*="-location"]').value
+}
+
 function add() {
   // negative ids to be able to create the slots later
   current.value.push(new gState.model.Slot(
     --lastId, Object.keys(gState.model.WeekDay)[0], 900, 1000,
     "???", Object.keys(gState.model.WeekDay)[0], -1));
 }
+
+function overlapsSlots(slot, slots, includingLocation=true) {
+    for (let s of slots) {
+        // no hay conflicto si el grupo es el mismo -- o comparando slot contra si mismo
+        if (slot.id == s.id) continue; 
+
+        // no hay conflicto si día o cuatrimestre no coinciden
+        if (slot.semester != s.semester || slot.weekDay != s.weekDay) continue;
+
+        // no hay conflicto si espacio debe coincidir y no coincide
+        if (includingLocation && slot.location != s.location) continue;
+
+        // no hay conflicto si uno empieza después de que el otro haya acabado
+        if ((slot.startTime >= s.endTime) || (s.startTime >= slot.endTime)) continue;
+        
+        // pues sí: hay conflicto
+        return true;
+    }
+    return null;
+}
+
+function addSlot(type) {
+  const duration = type === 0 ? 200 : 100; // 200 para Lab, 100 para Teoría
+  const weekDays = Object.keys(gState.model.WeekDay); // Obtiene todos los días (lunes a viernes)
+  let nextId = --lastId;
+  let valid = false;
+  let s = null;
+
+  for (let dayIndex = 0; dayIndex < weekDays.length && !valid; dayIndex++) {
+    const weekDay = weekDays[dayIndex]; // Selecciona el día actual (lunes, martes, etc.)
+    let startTime = 900; // Inicio del día
+    let endTime = 2000; // Fin del día
+
+    for (let start = startTime; !valid && start + duration <= endTime; start += 100) {
+      const group = gState.resolve(props.groupId);
+      const subject = gState.resolve(group.subjectId);
+
+      s = new gState.model.Slot(
+        nextId,
+        weekDay,
+        start,
+        start + duration,
+        "???",
+        subject.semester, // Asigna "semestre" para Lab y "???" para Teoría
+        props.groupId
+      );
+
+      // Verifica si la franja no entra en conflicto
+      setLastLocation(s);
+      valid = !overlapsSlots(s, [...gState.model.getSlots(), ...current.value]);
+    }
+  }
+
+  if (valid) {
+    current.value.push(s);
+  } else {
+    const typeName = type === 0 ? "Laboratorio de 2h" : "Teoría de 1h";
+    alert(`No se encontró disponibilidad de ${typeName} en la semana.`);
+  }
+}
+
+
 
 function rm(slot) {
   current.value.splice(current.value.findIndex(o => o.id == slot.id), 1);
@@ -95,6 +165,10 @@ const timeToHundreds = t => {
 <style scoped>
 .exists {
   background-color: lightblue;
+}
+
+.special {
+  border: 2px solid green;
 }
 
 .caja {

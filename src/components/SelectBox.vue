@@ -10,11 +10,11 @@
         </div>
         <div class="col-9 text-start">
             <div v-for="o in possible" :key="o.id" class="caja">
-                <span v-if="o.id == current" class="exists" 
+                <span v-if="o.id == current" class= "badge rounded-pill text-bg-primary me-1" 
                     @click="current = ''">
                     {{ o[displayCol] }}
                 </span>
-                <span v-else @click="current = o.id">
+                <span v-else class= "badge rounded-pill text-bg-secondary me-1"  @click="current = o.id">
                     {{ o[displayCol] }}
                 </span>
             </div>

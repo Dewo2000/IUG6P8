@@ -20,10 +20,10 @@
           <SelectBox 
             :all="gState.model.getUsers({ userRole: gState.model.UserRole.TEACHER })" 
             :start="group.teacherId"
-            :displayCol="'userName'" id="e-teacherId" label="Profesor" />
+            :displayCol="'userName'" id="e-teacherId" label="Profesor"/>
           <br>
           <SlotBox 
-            :start="group.slots"
+            :start="group.slots" :groupId="group.id"
             id="e-slots" label="Slots" />
         </div>
         <button type="submit" class="invisible">Submit</button>
