@@ -125,6 +125,12 @@
   </div>
 
   <!-- 
+    Modal para confirmar la eliminación
+  -->
+  <ConfirmModal ref="confirmModalRef"  :isAdd="false" :text="confirmModalText" :action="confirmAction"
+    @add="(o) => { console.log('adding', o); gState.model.addUser(o); gState.key++ }"
+    @edit="(o) => { console.log('setting', o); gState.model.setUser(o); gState.key++ }" />
+  <!-- 
     Modal para crear/editar usuario
     siempre usamos el mismo, y no se muestra hasta que hace falta
   -->
@@ -156,6 +162,7 @@ import DetailsPane from './DetailsPane.vue';
 import UserModal from './UserModal.vue';
 import SubjectModal from './SubjectModal.vue';
 import GroupModal from './GroupModal.vue';
+import ConfirmModal from './ConfirmModal.vue';
 
 import { ref, computed, onMounted, nextTick } from 'vue';
 import { gState, semesterNames } from '../state.js';
@@ -295,12 +302,19 @@ const selectOne = (type, id) => {
   selected.value = element
 }
 
+///////Modal para confirm
+
+let confirmModalRef = ref(null);
+let confirmModalText = ref("texto");
+let confirmAction= ref(null); // funcion a la que llamar si se confirma
+
 /////
 // Usuarios
 /////
 
 // modal para añadir/editar
 let userModalRef = ref(null);
+let userDeleteModal = ref(null);
 
 const randomUser = () => gState.model.Util.randomUser(-1, new Map())
 let userToAddOrEdit = ref(randomUser());
@@ -316,12 +330,23 @@ async function editUser(id) {
   userModalRef.value.show()
 }
 
-function rmUser(id) {
-  gState.model.rmUser(id)
+async function confirmRemoveUser(id) {
+  console.log("now confirming removal of", id)
+  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmAction.value = () =>{
+    gState.model.rmUser(id)
   if (selected.value.id == id) {
     selected.value = { id: -1 };
   }
   gState.key++
+  }
+  // da tiempo a Vue para que prepare el componente antes de mostrarlo
+  await nextTick()
+  confirmModalRef.value.show()
+}
+
+function rmUser(id) {
+  confirmRemoveUser(id)
 }
 
 /////
@@ -345,12 +370,23 @@ async function editSubject(id) {
   subjectModalRef.value.show()
 }
 
-function rmSubject(id) {
-  if (selected.value.id == id) {
+async function confirmRemoveSubject(id) {
+  console.log("now confirming removal of", id)
+  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmAction.value = () =>{
+    if (selected.value.id == id) {
     selected.value = { id: -1 };
   }  
   gState.model.rmSubject(id)
   gState.key++
+  }
+  // da tiempo a Vue para que prepare el componente antes de mostrarlo
+  await nextTick()
+  confirmModalRef.value.show()
+}
+
+function rmSubject(id) {
+ confirmRemoveSubject(id)
 }
 
 
@@ -376,12 +412,23 @@ async function editGroup(id) {
   groupModalRef.value.show()
 }
 
-function rmGroup(id) {
-  gState.model.rmGroup(id)
+async function confirmRemoveGroup(id) {
+  console.log("now confirming removal of", id)
+  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmAction.value = () =>{
+    gState.model.rmGroup(id)
   if (selected.value.id == id) {
     selected.value = { id: -1 };
   }
   gState.key++
+  }
+  // da tiempo a Vue para que prepare el componente antes de mostrarlo
+  await nextTick()
+  confirmModalRef.value.show()
+}
+
+function rmGroup(id) {
+  confirmRemoveGroup(id)
 }
 
 </script>

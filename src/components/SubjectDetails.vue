@@ -31,7 +31,7 @@
     <h5>Acciones</h5>
     <div class="btn-group">
       <button @click="$emit('editSubject')" class="btn btn-outline-success">✏️</button>
-      <button @click="$emit('rmSubject')" class="btn btn-outline-danger">🗑️</button>
+      <button @click="$emit('rmSubject')" class="btn btn-outline-danger" :disabled="subject.groups.length>0">🗑️</button>
     </div>
 </template>
 
