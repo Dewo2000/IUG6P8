@@ -124,7 +124,7 @@ function addSlot(type) {
         start,
         start + duration,
         "???",
-        subject.semester, // Asigna "semestre" para Lab y "???" para Teoría
+        subject.semester,
         props.groupId
       );
 

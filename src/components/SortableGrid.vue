@@ -38,7 +38,7 @@
           </template>
           <template v-else>
             <span 
-              :class="index == 0 ? 'name' : null"
+              :class='[index == 0 ? "name" : "null"]'
               :data-bs-toggle="col.title ? 'tooltip' : null" 
               :data-bs-html="col.title ? true : null"
               :data-bs-title="col.title ? col.title(entry, col.key) : null">
