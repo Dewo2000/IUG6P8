@@ -30,7 +30,7 @@
     <div class="col-auto">
       <div v-for="col in columns" :key="col.key">
         <div class="row g-3 align-items-center">
-          <div class="col-auto first">
+          <div class="col-auto first" href="#div-details">
             <label :for="`${id}_${col.key}`" class="col-form-label">{{ col.display }}</label>
           </div>
           <div class="col-auto">

@@ -1,7 +1,7 @@
 <template>
 
   <!-- Navbar principal -->
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">PlanDoc</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -54,11 +54,11 @@
         <div>
           <h5 class="d-inline">Usuarios
           </h5>
-          <a class="d-inline d-sm-none details" href="#div-details">↘️</a>
+          <a class="d-inline d-sm-none details right-alignment" href="#div-details">↘️</a>
         </div>
         <span v-if="debug"> {{ gState.searchUserQuery }}</span>
         <FilterOrAddBox v-model:filter="gState.searchUserQuery" :columns="userColumns" @add-element="editUser(-1)"
-          addBtnTitle="Añadir nuevo usuario" />
+          addBtnTitle="Añadir nuevo usuario"/>
         <div class="overflow-y-scroll vh-100">
           <SortableGrid :data="users" :columns="userColumns" :filter="gState.searchUserQuery"
             v-model:sorter="gState.userSorter" @selectOne="(e) => selectOne('user', e)" />
@@ -73,7 +73,7 @@
         </div>
         <span v-if="debug"> {{ gState.searchSubjectQuery }}</span>
         <FilterOrAddBox v-model:filter="gState.searchSubjectQuery" :columns="subjectColumns" @add-element="editSubject(-1)"
-          addBtnTitle="Añadir nueva asignatura" />
+          addBtnTitle="Añadir nueva asignatura"/>
         <div class="overflow-y-scroll vh-100">
           <SortableGrid :data="subjects" :columns="subjectColumns" :filter="gState.searchSubjectQuery"
             v-model:sorter="gState.subjectSorter" @selectOne="(e) => selectOne('subject', e)" />
@@ -88,7 +88,7 @@
         </div>
         <span v-if="debug"> {{ gState.searchGroupQuery }}</span>
         <FilterOrAddBox v-model:filter="gState.searchGroupQuery" :columns="groupColumns" @add-element="editGroup(-1)"
-          addBtnTitle="Añadir nuevo grupo" />
+          addBtnTitle="Añadir nuevo grupo"/>
         <div class="overflow-y-scroll vh-100">
           <SortableGrid :data="groups" :columns="groupColumns" :filter="gState.searchGroupQuery"
             v-model:sorter="gState.groupSorter" @selectOne="(e) => selectOne('group', e)" />
@@ -102,10 +102,10 @@
           <a class="d-inline d-sm-none details" href="#div-details">↘️</a>
         </div>
         <span v-if="debug"> {{ gState.searchLocationQuery }}</span>
-        <FilterOrAddBox v-model:filter="gState.searchLocationQuery" :columns="locationColumns" addBtnTitle="" />
+        <FilterOrAddBox v-model:filter="gState.searchLocationQuery" :columns="locationColumns" addBtnTitle=""/>
         <div class="overflow-y-scroll vh-100">
           <SortableGrid :data="locations" :columns="locationColumns" :filter="gState.searchLocationQuery"
-            v-model:sorter="gState.locationSorter" @selectOne="(e) => selectOne('location', e)" />
+            v-model:sorter="gState.locationSorter"  @selectOne="(e) => selectOne('location', e)" />
         </div>
       </div>
 
@@ -299,6 +299,10 @@ const selectOne = (type, id) => {
     locations.value.find(o => o.id == id) :
     gState.resolve(id)
   console.log(`selected ${type} ${id}`, element)
+  const detailsDiv = document.getElementById("div-details");
+      if (detailsDiv) {
+        detailsDiv.scrollIntoView({ behavior: "smooth" });
+      }
   selected.value = element
 }
 
@@ -438,6 +442,10 @@ function rmGroup(id) {
   background-color: #faffbb;
   border-bottom: 2px solid black;
   margin-bottom: 5px
+}
+
+body {
+  padding-top: 60px; /* Ajusta el valor al tamaño de tu navbar */
 }
 
 .escape {
