@@ -332,7 +332,8 @@ async function editUser(id) {
 
 async function confirmRemoveUser(id) {
   console.log("now confirming removal of", id)
-  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmModalText.value = `Estas eliminando a "${gState.resolve(id).userName}" la eliminación es irreversible ,
+  seguro que quieres eliminar ? `
   confirmAction.value = () =>{
     gState.model.rmUser(id)
   if (selected.value.id == id) {
@@ -372,7 +373,8 @@ async function editSubject(id) {
 
 async function confirmRemoveSubject(id) {
   console.log("now confirming removal of", id)
-  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmModalText.value = `Estas eliminando la asignatura de "${gState.resolve(id).name}" la eliminación es irreversible ,
+  seguro que quieres eliminar ? `
   confirmAction.value = () =>{
     if (selected.value.id == id) {
     selected.value = { id: -1 };
@@ -414,7 +416,8 @@ async function editGroup(id) {
 
 async function confirmRemoveGroup(id) {
   console.log("now confirming removal of", id)
-  confirmModalText.value = 'Quieres eliminar del todo '
+  confirmModalText.value = `Estas eliminando el grupo "${gState.resolve(id).name}" la eliminación es irreversible ,
+  seguro que quieres eliminar ? `
   confirmAction.value = () =>{
     gState.model.rmGroup(id)
   if (selected.value.id == id) {

@@ -1,6 +1,6 @@
 <template>
     <BaseModal ref="modalRef" id="confirmModal"
-      :title="'Confirmas eliminar'" >
+      :title="'Eliminación irreversible , ¿confirmas eliminar?'" >
       <template #body>
         <span>{{ text }}</span>
       </template>
