@@ -12,7 +12,13 @@
             <br>
             <TextBox :start="subject.degree" id="e-degree" label="Grados" required="true"/>
             <TextBox :start="subject.codes" id="e-codes" label="Códigos GEA" required="true"/>
-            <TextBox :start="subject.semester" id="e-semester" label="Cuatrimestre" required="true"/>
+            <div class="form-group">
+            <label for="e-semester">Cuatrimestre</label>
+            <select id="e-semester" name="e-semester" v-model="semester" class="form-control">
+              <option value="SPRING">C2</option>
+              <option value="FALL">C1</option>
+            </select>
+          </div>
             <TextBox :start="''+subject.credits" id="e-credits" label="Créditos" required="true" pattern="\d{1,2}" />
             <br>
           </div>
@@ -45,6 +51,7 @@ const props = defineProps({
 
 let modalRef = ref(null);
 let name = ref(props.subject.name);
+let semester = ref(props.subject.semester || "");
 
 function setSubject() {    
   const subject = props.subject;
@@ -71,7 +78,7 @@ function setSubject() {
     valueFor("e-short"), 
     valueFor("e-degree"), 
     +valueFor("e-credits"),
-    valueFor("e-semester"),
+    semester.value,
     valueFor("e-codes"),
     subject.groups,
   ))
