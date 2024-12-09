@@ -12,12 +12,17 @@
             <br>
             <TextBox :start="subject.degree" id="e-degree" label="Grados" required="true"/>
             <TextBox :start="subject.codes" id="e-codes" label="Códigos GEA" required="true"/>
-            <div class="form-group">
-            <label for="e-semester">Cuatrimestre</label>
-            <select id="e-semester" name="e-semester" v-model="semester" class="form-control">
+            <div class="form-group row g-1 form-inline align-items-baseline">
+              <div class="col-3 text-end">
+                <label for="e-semester">Cuatrimestre</label>
+             </div>
+             <div class="col-auto">
+              <select id="e-semester" name="e-semester" v-model="semester" class="form-control">
+                <option value="" disabled>Selecciona un cuatrimestre</option>
               <option value="SPRING">C2</option>
               <option value="FALL">C1</option>
             </select>
+        </div>
           </div>
             <TextBox :start="''+subject.credits" id="e-credits" label="Créditos" required="true" pattern="\d{1,2}" />
             <br>
