@@ -36,6 +36,17 @@
               {{ o.name }}
             </span>
           </template>
+          <template v-else-if="col.key=='niceSlots'">
+            <template v-for="(slot, idx) in entry[col.key].split(',')" :key="idx">
+              <span
+                class="badge rounded-pill text-bg-secondary me-1"
+                :data-bs-toggle="col.title ? 'tooltip' : null"
+                :data-bs-html="col.title ? true : null"
+                :data-bs-title="col.title ? col.title(entry, col.key) : null">
+                {{ slot.trim() }}
+              </span>
+            </template>
+          </template>
           <template v-else>
             <span 
               :class='[index == 0 ? "name" : "null"]'
