@@ -36,7 +36,7 @@
               {{ o.name }}
             </span>
           </template>
-          <template v-else-if="col.key=='niceSlots'">
+          <template v-else-if="col.key === 'niceSlots' && entry[col.key] && typeof entry[col.key] === 'string'">
             <template v-for="(slot, idx) in entry[col.key].split(',')" :key="idx">
               <span
                 class="badge rounded-pill text-bg-secondary me-1"
