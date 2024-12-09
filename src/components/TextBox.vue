@@ -4,7 +4,7 @@
             <label :for="id" class="form-label">{{ label }}</label>
         </div>
         <div class="col-auto">
-            <input type="text" class="form-control" :name="id" :id="id" v-model="value"
+            <input type="text" class="form-control" :name="id" :id="id" v-model="value" :required="required" :pattern="pattern"
                 @input="$emit('change', value);">
         </div>
     </div>
@@ -17,6 +17,8 @@ const props = defineProps({
     label: String,
     id: String,
     start: String,
+    required: Boolean,
+    pattern: String
 })
 defineEmits(['change'])
 

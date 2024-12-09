@@ -6,14 +6,14 @@
         <form id="addOrEditSubjectForm" 
           @submit.prevent="e => setSubject()">
           <div class="container">
-            <TextBox :start="subject.name" id="e-name" label="Name"  
+            <TextBox :start="subject.name" id="e-name" label="Name" required="true" 
               @change="(v) => name=v"/>
-            <TextBox :start="subject.short" id="e-short" label="Acrónimo" />
+            <TextBox :start="subject.short" id="e-short" label="Acrónimo" required="true"/>
             <br>
-            <TextBox :start="subject.degree" id="e-degree" label="Grados"/>
-            <TextBox :start="subject.codes" id="e-codes" label="Códigos GEA"/>
-            <TextBox :start="subject.semester" id="e-semester" label="Cuatrimestre" />
-            <TextBox :start="''+subject.credits" id="e-credits" label="Créditos" />
+            <TextBox :start="subject.degree" id="e-degree" label="Grados" required="true"/>
+            <TextBox :start="subject.codes" id="e-codes" label="Códigos GEA" required="true"/>
+            <TextBox :start="subject.semester" id="e-semester" label="Cuatrimestre" required="true"/>
+            <TextBox :start="''+subject.credits" id="e-credits" label="Créditos" required="true" pattern="\d{1,2}" />
             <br>
           </div>
           <button type="submit" class="invisible">Submit</button>

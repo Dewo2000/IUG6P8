@@ -9,14 +9,14 @@
     <template #body>
       <form id="addOrEditGroupForm" @submit.prevent="e => setGroup()">
         <div class="container">
-          <TextBox :start="group.name" id="e-name" label="Name"
+          <TextBox :start="group.name" id="e-name" label="Name" required="true"
             @change="(v) => name = gState.resolve(group.subjectId).short + ':' + v" />
           <SelectBox :all="gState.model.getSubjects()" 
             :start="group.subjectId" :displayCol="'short'" id="e-subjectId"
             label="Asignatura" />
           <br>
-          <TextBox :start="'' + group.credits" id="e-credits" label="Créditos" />
-          <TextBox :start="'' + group.isLab" id="e-isLab" label="Prácticas" />
+          <TextBox :start="'' + group.credits" id="e-credits" label="Créditos" required="true" pattern="\d{1,2}"/>
+          <TextBox :start="'' + group.isLab" id="e-isLab" label="Prácticas" required="true"/>
           <SelectBox 
             :all="gState.model.getUsers({ userRole: gState.model.UserRole.TEACHER })" 
             :start="group.teacherId"

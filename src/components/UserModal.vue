@@ -6,13 +6,13 @@
         <form id="addOrEditUserForm" 
           @submit.prevent="e => setUser()">
           <div class="container">
-            <TextBox :start="user.firstName" id="e-firstName" label="Nombre" />
-            <TextBox :start="user.lastName" id="e-lastName" label="Apellidos" />
-            <TextBox :start="''+user.maxCredits" id="e-maxCredits" label="Créditos totales" />
+            <TextBox :start="user.firstName" id="e-firstName" label="Nombre" required="true"/>
+            <TextBox :start="user.lastName" id="e-lastName" label="Apellidos" required="true"/>
+            <TextBox :start="''+user.maxCredits" id="e-maxCredits" label="Créditos totales" required="true" pattern="\d{1,2}"/>
             <br>
-            <TextBox :start="user.userName" id="e-userName" label="Login" 
+            <TextBox :start="user.userName" id="e-userName" label="Login" required="true"
                 @change="(v) => name=v"/>
-            <TextBox :start="user.token" id="e-userToken" label="Password" />
+            <TextBox :start="user.token" id="e-userToken" label="Password" required="true"/>
             <br>
             <MemberBox :start="user.groups" :all="prettyGroups()" id="e-groups" label="grupos" />
           </div>
