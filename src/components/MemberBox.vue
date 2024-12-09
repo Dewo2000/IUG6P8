@@ -12,6 +12,10 @@
                 <span v-if="current.some(c => c.id == o.id)" class="badge rounded-pill text-bg-primary me-1" @click="rm(o.id)">
                     {{ o.name }}
                 </span>
+                <span v-else-if="groupConflict(o,current)" 
+                    class="badge rounded-pill text-bg-danger me-1" >
+                    {{ o.name }}
+                </span>
                 <span v-else class="badge rounded-pill text-bg-secondary me-1" @click="current.push(o)">
                     {{ o.name }}
                 </span>
@@ -48,6 +52,11 @@ function rm(id) {
 const read = computed(() => {
     return JSON.stringify(current.value.map(o => o.id));
 })
+function groupConflict(group,groups){
+    const conflicts = gState.model.hasTimeConflict(group, groups);
+    return conflicts.length > 0; // Devuelve true si hay conflictos
+}
+
 
 </script>
 
