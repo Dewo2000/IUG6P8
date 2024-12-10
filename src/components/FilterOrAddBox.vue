@@ -37,6 +37,7 @@
           <div class="col-auto">
             <input type="text" v-model="filter.fields[col.key]" :id="`${id}_${col.key}`" 
               @input="updateValue(col.key)" class="form-control">
+
           </div>
         </div>
       </div>
