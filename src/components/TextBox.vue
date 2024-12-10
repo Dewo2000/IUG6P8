@@ -4,7 +4,7 @@
             <label :for="id" class="form-label">{{ label }}</label>
         </div>
         <div class="col-auto">
-            <input type="text" class="form-control" :name="id" :id="id" v-model="value"
+            <input :type="type" class="form-control" :name="id" :id="id" v-model="value"
                 @input="$emit('change', value);">
         </div>
     </div>

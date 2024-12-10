@@ -10,7 +10,7 @@
       <tr>        
         <th v-for="col in columns" :key="col.key"
           @click="sortBy(col.key)"
-          :class="sorter.length && sorter.slice(-1)[0].key == col.key ? 'ghead active' : 'ghead'">
+          :class="sorter.length && sorter.slice(-1)[0].key == col.key ? 'ghead active' : 'ghead'" >
           <span v-if="sorter.find(o => o.key==col.key && o.order==1)" class="arrow asc"></span>
           <span v-if="sorter.find(o => o.key==col.key && o.order==-1)" class="arrow dsc"></span>
           {{ col.display }}
@@ -23,7 +23,7 @@
 
         <td v-for="(col, index) in columns" :key="`${entry.id}_${col.key}`"
           class="text-start">
-          <template v-if="col.type == 'Enum'">
+          <template v-if="col.type == 'Enum'" >
             {{ col.displayValues[entry[col.key]] }}
           </template>
           <template v-else-if="col.type == 'ObjectIds'">

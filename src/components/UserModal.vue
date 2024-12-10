@@ -12,7 +12,7 @@
             <br>
             <TextBox :start="user.userName" id="e-userName" label="Login" 
                 @change="(v) => name=v"/>
-            <TextBox :start="user.token" id="e-userToken" label="Password" />
+            <TextBox :start="user.token" :type="password" id="e-userToken" label="Password" />
             <br>
             <MemberBox :start="user.groups" :all="prettyGroups()" id="e-groups" label="grupos" />
           </div>

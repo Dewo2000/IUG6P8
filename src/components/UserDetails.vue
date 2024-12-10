@@ -29,7 +29,40 @@
 
     <SortableGrid :data="addSlotCols(slots)" :columns="slotColumns" 
       :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
-    <TimeTable :slots="slots" />
+      <div class="form-check">
+      <input 
+        type="checkbox" 
+        id="firstSemester" 
+        v-model="showFirstSemester" 
+        @change="toggleSemester" 
+        class="form-check-input" 
+      />
+      <label for="firstSemester" class="form-check-label">Primer Cuatrimestre</label>
+    </div>
+    <div class="form-check">
+      <input 
+        type="checkbox" 
+        id="secondSemester" 
+        v-model="showSecondSemester" 
+        @change="toggleSemester" 
+        class="form-check-input" 
+      />
+      <label for="secondSemester" class="form-check-label">Segundo Cuatrimestre</label>
+    </div>
+
+    <!-- Tablas dinámicas -->
+    <div v-if="showFirstSemester">
+  <h3>Horario - Primer Cuatrimestre</h3>
+  <TimeTable :key="'first-' + forceUpdateKey" :slots="firstSemesterSlots" />
+</div>
+<br>
+<div v-if="showSecondSemester">
+  <h3>Horario - Segundo Cuatrimestre</h3>
+  <TimeTable 
+    :key="'second-' + forceUpdateKey" 
+    :slots="secondSemesterSlots" 
+  />
+</div>
 
     <h5>Acciones</h5>
     <div class="btn-group">
@@ -57,17 +90,36 @@ const props = defineProps({
 
 let sorter = ref([{key: "weekDay", order: 1}])
 
-const slots = computed(() => slotsOfAllGroups(props.user.groups))
 
-const slotsOfAllGroups = (gg) => {
-    const rv = [];
-    for (let g of gg.map(o => gState.resolve(o))) {
-        for (let s of g.slots.map(s => gState.resolve(s))) {
-            rv.push(s);
-        }
-    }
-    return rv;
-}
+const showFirstSemester = ref(false);
+const showSecondSemester = ref(false);
+
+const forceUpdateKey = ref(0);
+
+const toggleSemester = () => {
+  forceUpdateKey.value++;
+};
+
+const firstSemesterSlots = computed(() =>
+  showFirstSemester.value ? slots.value.filter(slot => slot.semester === 'FALL') : []
+);
+
+const secondSemesterSlots = computed(() =>
+  showSecondSemester.value ? slots.value.filter(slot => slot.semester === 'SPRING') : []
+);
+
+
+const slots = computed(() => {
+    return slotsOfAllGroups(props.user.groups);
+});
+
+
+const slotsOfAllGroups = (groups) => {
+    return groups.flatMap(group => {
+        const resolvedGroup = gState.resolve(group);
+        return resolvedGroup.slots.map(slot => gState.resolve(slot));
+    });
+};
 
 const slotColumns = [
     { key: 'niceGroup', display: 'Grupo', type: 'String' },
