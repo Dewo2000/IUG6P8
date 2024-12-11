@@ -4,11 +4,7 @@
             <label :for="id" class="form-label">{{ label }}</label>
         </div>
         <div class="col-auto">
-<<<<<<< HEAD
-            <input :type="type" class="form-control" :name="id" :id="id" v-model="value"
-=======
             <input type="text" class="form-control" :name="id" :id="id" v-model="value" :required="required" :pattern="pattern"
->>>>>>> b433ec83c3a61172506e319da92c4599e6b1b354
                 @input="$emit('change', value);">
         </div>
     </div>
